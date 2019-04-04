@@ -14,5 +14,5 @@ import java.util.List;
 @Builder
 public class GeneResponseDTO {
 
-	private List<Gene> geneName;
+	private String geneName;
 }

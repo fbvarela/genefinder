@@ -1,4 +1,4 @@
-package com.genefinder.demo.domain.entity.repository;
+package com.genefinder.demo.domain.repository;
 
 import com.genefinder.demo.domain.entity.Gene;
 import org.springframework.data.jpa.repository.JpaRepository;

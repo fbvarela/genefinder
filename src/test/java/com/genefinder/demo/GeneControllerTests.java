@@ -22,7 +22,7 @@ import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class GeneFinderApplicationTests {
+public class GeneControllerTests {
 
 	private GeneService geneService;
 
@@ -36,13 +36,13 @@ public class GeneFinderApplicationTests {
 
 	@Test
 	public void happyPath() throws Exception, ParameterException {
+
 		String pattern = "ENSAMEG";
 		String species = "ailuropoda_melanoleuca";
 		int limit = 2;
 
 		geneService = Mockito.mock(GeneService.class);
 		controller.setGeneService(geneService);
-
 
 		List<String> expected = Arrays.asList("ENSAMEG00000022992", "ENSAMEG00000022989");
 
@@ -54,7 +54,58 @@ public class GeneFinderApplicationTests {
 		Mockito.when(geneService.findGenes(pattern, species, limit)).thenReturn(geneResponseDTOS);
 
 		List<String> result = controller.getGenesName(pattern, species, limit);
+		assertEquals(result.size(), 2);
 		assertEquals(result, expected);
 	}
 
+	@Test
+	public void shouldReturnAnEmptyListTest() throws Exception, ParameterException {
+
+		String pattern = "FAKEPATTERN";
+		String species = "homo fake";
+		int limit = 2;
+
+		geneService = Mockito.mock(GeneService.class);
+		controller.setGeneService(geneService);
+
+		List<String> expected = new ArrayList<>();
+
+		List<GeneResponseDTO> geneResponseDTOS = new ArrayList<>();
+
+		Mockito.when(geneService.findGenes(pattern, species, limit)).thenReturn(geneResponseDTOS);
+
+		List<String> result = controller.getGenesName(pattern, species, limit);
+		assertEquals(result.size(), 0);
+		assertEquals(result, expected);
+	}
+
+
+
+	@Test(expected = ParameterException.class)
+	public void shouldThrownParameterExceptionIfNoParametersTest() throws Exception, ParameterException {
+
+		String pattern = "";
+		String species = "";
+		int limit = 2;
+
+		geneService = Mockito.mock(GeneService.class);
+		controller.setGeneService(geneService);
+
+		controller.getGenesName(pattern, species, limit);
+	}
+
+	@Test(expected = Exception.class)
+	public void shouldThrownExceptionIfRepositoryFailsTest() throws Exception, ParameterException {
+
+		String pattern = "ENSAMEG";
+		String species = "ailuropoda_melanoleuca";
+		int limit = 2;
+
+		geneService = Mockito.mock(GeneService.class);
+		controller.setGeneService(geneService);
+
+		Mockito.when(geneService.findGenes(pattern, species, limit)).thenThrow(Exception.class);
+
+		controller.getGenesName(pattern, species, limit);
+	}
 }

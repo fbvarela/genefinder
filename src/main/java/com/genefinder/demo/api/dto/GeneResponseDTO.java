@@ -1,10 +1,7 @@
 package com.genefinder.demo.api.dto;
 
 import com.genefinder.demo.domain.entity.Gene;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
@@ -12,6 +9,8 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @Builder
+@EqualsAndHashCode
+@ToString
 public class GeneResponseDTO {
 
 	private String geneName;

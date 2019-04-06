@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import com.genefinder.demo.service.GeneService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,12 +23,14 @@ public class GeneController {
 
 	private static final int DEFAULT_LIMIT = 10;
 
+	@Autowired
 	private GeneService geneService;
 
 	@GetMapping
-	public List<String> getGenesName(@RequestParam String pattern,
-							   	@RequestParam String species,
-							   	@RequestParam Integer limit) throws ParameterException, Exception {
+	public ResponseEntity<List<String>> getGenesName(@RequestParam String pattern,
+									   				 @RequestParam String species,
+									   				 @RequestParam Integer limit)
+			throws ParameterException, Exception {
 
 		LOGGER.info("GeneController.getGenesName : REST request to get all Genes by species with a limit {}", pattern + " - " + species + " - ");
 
@@ -39,20 +42,19 @@ public class GeneController {
 		}
 
 		if (limit == null) limit = DEFAULT_LIMIT;
-
-		List<GeneResponseDTO> genes = null;
+		List<GeneResponseDTO> genes;
+		List<String> genesName;
 
 		try {
 			genes = geneService.findGenes(pattern, species, limit);
+			genesName = genes.stream().map(name -> name.getGeneName()).collect(Collectors.toList());
+			LOGGER.info("GeneController.getGenesName : END OK - {}", genes.size());
 
 		} catch (Exception e) {
+			LOGGER.error("GeneService.findGenes : END ERROR - {}", e.getMessage());
 			throw new Exception("Unable to retrieve data");
 		}
 
-		List<String> genesName = genes.stream().map(name -> name.getGeneName()).collect(Collectors.toList());
-
-		LOGGER.info("GeneController.getGenesName : END OK - {}", genes.size());
-
-		return genesName;
+		return new ResponseEntity(genesName, HttpStatus.OK);
 	}
 }

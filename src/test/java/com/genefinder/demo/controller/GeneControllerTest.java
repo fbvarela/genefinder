@@ -1,17 +1,17 @@
-package com.genefinder.demo;
+package com.genefinder.demo.controller;
 
 import com.genefinder.demo.api.controller.GeneController;
 import com.genefinder.demo.api.dto.GeneResponseDTO;
 import com.genefinder.demo.api.exception.ParameterException;
 import com.genefinder.demo.service.GeneService;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
@@ -22,7 +22,7 @@ import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class GeneControllerTests {
+public class GeneControllerTest {
 
 	private GeneService geneService;
 
@@ -44,7 +44,7 @@ public class GeneControllerTests {
 		geneService = Mockito.mock(GeneService.class);
 		controller.setGeneService(geneService);
 
-		List<String> expected = Arrays.asList("ENSAMEG00000022992", "ENSAMEG00000022989");
+		ResponseEntity expected = new ResponseEntity(Arrays.asList("ENSAMEG00000022992", "ENSAMEG00000022989"), HttpStatus.OK);
 
 		List<GeneResponseDTO> geneResponseDTOS = Arrays.asList(GeneResponseDTO.builder()
 					.geneName("ENSAMEG00000022992").build(),
@@ -53,9 +53,9 @@ public class GeneControllerTests {
 
 		Mockito.when(geneService.findGenes(pattern, species, limit)).thenReturn(geneResponseDTOS);
 
-		List<String> result = controller.getGenesName(pattern, species, limit);
-		assertEquals(result.size(), 2);
-		assertEquals(result, expected);
+		ResponseEntity result = controller.getGenesName(pattern, species, limit);
+
+		assertEquals(expected, result);
 	}
 
 	@Test
@@ -68,15 +68,15 @@ public class GeneControllerTests {
 		geneService = Mockito.mock(GeneService.class);
 		controller.setGeneService(geneService);
 
-		List<String> expected = new ArrayList<>();
+		ResponseEntity expected = new ResponseEntity(new ArrayList<>(), HttpStatus.OK) ;
 
 		List<GeneResponseDTO> geneResponseDTOS = new ArrayList<>();
 
 		Mockito.when(geneService.findGenes(pattern, species, limit)).thenReturn(geneResponseDTOS);
 
-		List<String> result = controller.getGenesName(pattern, species, limit);
-		assertEquals(result.size(), 0);
-		assertEquals(result, expected);
+		ResponseEntity result = controller.getGenesName(pattern, species, limit);
+
+		assertEquals(expected, result);
 	}
 
 

@@ -5,6 +5,8 @@ import com.genefinder.demo.api.dto.GeneResponseDTO;
 import com.genefinder.demo.domain.entity.Gene;
 import com.genefinder.demo.domain.mapper.GeneMapper;
 import com.genefinder.demo.domain.repository.GeneRepository;
+import lombok.AllArgsConstructor;
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Setter
+@AllArgsConstructor
 public class GeneService {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(GeneController.class);
@@ -38,12 +42,12 @@ public class GeneService {
 				geneResponseDTOS.add(mapper.geneToGeneDto(gene));
 			}
 
-
 			LOGGER.info("GeneService.findGenes : END OK - {}", genes.size());
 
 			return geneResponseDTOS;
 
-		}catch (Exception e) {
+		} catch (Exception e) {
+			LOGGER.error("GeneService.findGenes : END ERROR - {}", e.getMessage());
 			throw new Exception("Data error finding genes", e);
 
 		}

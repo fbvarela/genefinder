@@ -41,7 +41,7 @@ public class GeneServiceTest {
 	public void happyPath() throws Exception {
 
 		String pattern = "ENSAMEG";
-		String species = "ailuropoda_melanoleuca";
+		String species = "homo_sapiens";
 		int limit = 1;
 
 		List<GeneResponseDTO> expected = new ArrayList<>();
@@ -68,7 +68,7 @@ public class GeneServiceTest {
 	@Test
 	public void shouldReturnEmptyListTest() throws Exception {
 
-		String pattern = "FAKE";
+		String pattern = "FAKE_PATTERN";
 		String species = "fake species";
 		int limit = 1;
 

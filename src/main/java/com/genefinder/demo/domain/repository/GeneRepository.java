@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface GeneRepository extends JpaRepository<Gene, String> {
 
-	@Query(value="select * from gene_autocomplete where stable_id like CONCAT(?1, '%') and species = ?2 LIMIT ?3", nativeQuery=true)
+	@Query(value="select * from gene_autocomplete where stable_id like CONCAT(?1, '%') and species = ?2 ORDER BY stable_id LIMIT ?3", nativeQuery=true)
 	List<Gene> findByPatternAndSpeciesLimitedTo(String pattern, String species, Integer limit);
 }

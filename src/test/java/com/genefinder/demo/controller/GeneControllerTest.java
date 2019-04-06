@@ -38,7 +38,7 @@ public class GeneControllerTest {
 	public void happyPath() throws Exception, ParameterException {
 
 		String pattern = "ENSAMEG";
-		String species = "ailuropoda_melanoleuca";
+		String species = "homo_sapiens";
 		int limit = 2;
 
 		geneService = Mockito.mock(GeneService.class);

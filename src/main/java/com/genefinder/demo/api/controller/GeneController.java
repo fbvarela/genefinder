@@ -46,7 +46,7 @@ public class GeneController {
 		List<String> genesName;
 
 		try {
-			genes = geneService.findGenes(pattern, species, limit);
+			genes = geneService.findGenes(pattern.toUpperCase(), species.toLowerCase(), limit);
 			genesName = genes.stream().map(name -> name.getGeneName()).collect(Collectors.toList());
 			LOGGER.info("GeneController.getGenesName : END OK - {}", genes.size());
 

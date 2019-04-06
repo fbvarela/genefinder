@@ -1,10 +1,12 @@
 pipeline {
     agent {
-        label 'docker'
         docker {
             image 'maven:3-alpine'
             args '-v /root/.m2:/root/.m2'
         }
+    }
+    options {
+        skipStagesAfterUnstable()
     }
     stages {
         stage('Build') {
@@ -12,7 +14,6 @@ pipeline {
                 sh 'mvn -B -DskipTests clean package'
             }
         }
-
         stage('Test') {
             steps {
                 sh 'mvn test'
@@ -21,6 +22,11 @@ pipeline {
                 always {
                     junit 'target/surefire-reports/*.xml'
                 }
+            }
+        }
+        stage('Deliver') {
+            steps {
+                sh './jenkins/scripts/deliver.sh'
             }
         }
     }

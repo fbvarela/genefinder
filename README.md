@@ -1,3 +1,5 @@
+### Gene Finder app
+
 #### GeneFinder
 GeneFinder is a REST-api application developed in Java 8 using the Spring Boot 2 framework and Maven. The IDE was IntelliJ.
 

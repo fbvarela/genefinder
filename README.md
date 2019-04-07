@@ -16,7 +16,7 @@ You can also run the project using the embedded IDE console or clicking the play
 I've created two branches in the Github repository. Developed, where I committed all the changes during the developed process, and master, with the first app final version.
 
 #### Deployment
-To deploy the application it can be used a pipeline using a Continuous Integration software. To scale to meet increased demand you can run multiple instances in Kubernetes.
+To deploy the application it can be used a pipeline using a Continuous Integration software. To meet increased demand, you can run multiple instances of the microservice in Kubernetes. To scale the database You can also have multiple clusters, and if demand rises, you can partition some tables or shard them to spread the load.
 
 #### Test
 To test the app, I have created unit tests for every class in the project with the JUnit library. Also, I coded integration tests to test the entire app flow. To ensure the correct functioning of the application I use Postman to test the endpoint (file: GENE FINDER.postman_collection.json in the root app folder).

@@ -1,0 +1,200 @@
+{
+	"info": {
+		"_postman_id": "dd5d993c-8e74-446f-a72b-fa51695abdd0",
+		"name": "GENE FINDER",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "get genes",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0ccd50e3-4329-4534-acea-8455e1013223",
+						"exec": [
+							"pm.test(\"response should be okay to process\", function () { ",
+							"    pm.response.to.have.status(200);",
+							"    pm.response.to.be.json;",
+							"    pm.response.to.have.jsonBody([]); ",
+							"    pm.response.to.not.have.jsonBody(\"error\"); ",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/genes?pattern=ENSG&species=homo_sapiens&limit=10",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"genes"
+					],
+					"query": [
+						{
+							"key": "pattern",
+							"value": "ENSG"
+						},
+						{
+							"key": "species",
+							"value": "homo_sapiens"
+						},
+						{
+							"key": "limit",
+							"value": "10"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get genes no data",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0ccd50e3-4329-4534-acea-8455e1013223",
+						"exec": [
+							"pm.test(\"response with no data\", function () { ",
+							"    pm.response.to.have.status(200);",
+							"    pm.response.to.be.json;",
+							"    pm.response.to.have.jsonBody([]); ",
+							"    pm.expect(pm.response.json().length).to.not.be.above(0);",
+							"    pm.response.to.not.have.jsonBody(\"error\"); ",
+							"});",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/genes?pattern=FAKE&species=fake species&limit=10",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"genes"
+					],
+					"query": [
+						{
+							"key": "pattern",
+							"value": "FAKE"
+						},
+						{
+							"key": "species",
+							"value": "fake species"
+						},
+						{
+							"key": "limit",
+							"value": "10"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get genes with no pattern",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0ccd50e3-4329-4534-acea-8455e1013223",
+						"exec": [
+							"pm.test(\"request with no patter\", function () { ",
+							"    pm.response.to.have.status(400);",
+							"    pm.response.to.be.withBody;",
+							"    pm.response.to.be.json;",
+							"    pm.response.to.have.jsonBody(\"message\"); ",
+							"});",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/genes?pattern=&species=homo_sapiens&limit=10",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"genes"
+					],
+					"query": [
+						{
+							"key": "pattern",
+							"value": ""
+						},
+						{
+							"key": "species",
+							"value": "homo_sapiens"
+						},
+						{
+							"key": "limit",
+							"value": "10"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "f154b749-5f5f-4dd7-87eb-6d6101eb0dd3",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "c9f82610-d034-4f35-b16d-9c79cf2db4ff",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

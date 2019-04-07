@@ -2,7 +2,6 @@ package com.genefinder.demo.controller;
 
 import com.genefinder.demo.api.controller.GeneController;
 import com.genefinder.demo.api.dto.GeneResponseDTO;
-import com.genefinder.demo.api.exception.ParameterException;
 import com.genefinder.demo.service.GeneService;
 import org.junit.Before;
 import org.junit.Test;
@@ -29,13 +28,13 @@ public class GeneControllerTest {
 	private GeneController controller;
 
 	@Before
-	public void setUp() throws Exception {
+	public void setUp()  {
 		controller = new GeneController();
 		MockitoAnnotations.initMocks(this);
 	}
 
 	@Test
-	public void happyPath() throws Exception, ParameterException {
+	public void happyPath() throws Exception {
 
 		String pattern = "ENSAMEG";
 		String species = "homo_sapiens";
@@ -59,7 +58,7 @@ public class GeneControllerTest {
 	}
 
 	@Test
-	public void shouldReturnAnEmptyListTest() throws Exception, ParameterException {
+	public void shouldReturnAnEmptyListTest() throws Exception {
 
 		String pattern = "FAKEPATTERN";
 		String species = "homo fake";
@@ -77,35 +76,5 @@ public class GeneControllerTest {
 		ResponseEntity result = controller.getGenesName(pattern, species, limit);
 
 		assertEquals(expected, result);
-	}
-
-
-
-	@Test(expected = ParameterException.class)
-	public void shouldThrownParameterExceptionIfNoParametersTest() throws Exception, ParameterException {
-
-		String pattern = "";
-		String species = "";
-		int limit = 2;
-
-		geneService = Mockito.mock(GeneService.class);
-		controller.setGeneService(geneService);
-
-		controller.getGenesName(pattern, species, limit);
-	}
-
-	@Test(expected = Exception.class)
-	public void shouldThrownExceptionIfRepositoryFailsTest() throws Exception, ParameterException {
-
-		String pattern = "ENSAMEG";
-		String species = "ailuropoda_melanoleuca";
-		int limit = 2;
-
-		geneService = Mockito.mock(GeneService.class);
-		controller.setGeneService(geneService);
-
-		Mockito.when(geneService.findGenes(pattern, species, limit)).thenThrow(Exception.class);
-
-		controller.getGenesName(pattern, species, limit);
 	}
 }

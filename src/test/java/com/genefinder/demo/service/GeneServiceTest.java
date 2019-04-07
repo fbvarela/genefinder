@@ -23,7 +23,7 @@ public class GeneServiceTest {
 	private GeneService service;
 
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() {
 		service = new GeneService(mapper, repository);
 		MockitoAnnotations.initMocks(this);
 		initMocks();

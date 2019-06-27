@@ -3,7 +3,7 @@
 #### GeneFinder
 GeneFinder is a REST-api application developed in Java 8 using the Spring Boot 2 framework and Maven. The IDE was IntelliJ.
 
-#### Run the application
+#### Running the application
 To compile, test and run the application, you have to run the following maven commands in the console in the project's root folder:
 ```
 > mvn clean
@@ -13,7 +13,7 @@ To compile, test and run the application, you have to run the following maven co
 You can also run the project using the embedded IDE console or clicking the play button.
 
 #### Repository (https://github.com/anikies/genefinder)
-I've created two branches in the Github repository. Developed, where I committed all the changes during the developed process, and master, with the first app final version.
+I've created two branches in the Github repository. *Develop*, where I committed all the changes during the developed process, and *master*, with the first app final version.
 
 #### Deployment
 To deploy the application it can be used a pipeline using a Continuous Integration software. To scale to meet increased demand you can run multiple instances in Kubernetes.

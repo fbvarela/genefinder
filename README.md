@@ -24,3 +24,5 @@ To automatize the process, you can create a stage in the pipeline to ensure that
 
 #### Improving app performance
 There are some issues in using the operator LIKE in SQL sentences. In this app is not the case because the wildcard is at the end of the pattern so the database engine will be able to use the indexes as usual and not make a full scan of the table.
+
+#### Travis CI
